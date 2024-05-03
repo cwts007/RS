@@ -1,12 +1,30 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import FormularioEquipos from './FormularioEquipos';
+import ListadoEquipos from './ListadoEquipos';
+import FormularioClientes from './FormularioClientes';
+import ListadoClientes from './ListadoClientes';
+import FormularioServicios from './FormularioServicios';
+import ListadoServicios from './ListadoServicios';
 
-const Contenido = () => {
+const Contenido = ({ seccion, subseccion }) => {
+    const renderContenido = () => {
+        switch (seccion) {
+            case 'Equipos':
+                return subseccion === 'Registro' ? <FormularioEquipos /> : <ListadoEquipos />;
+            case 'Clientes':
+                return subseccion === 'Registro' ? <FormularioClientes /> : <ListadoClientes />;
+            case 'Servicios':
+                return subseccion === 'Registro' ? <FormularioServicios /> : <ListadoServicios />;
+            default:
+                return null;
+        }
+    };
+
     return (
         <Container fluid className="p-4">
-            <h1>Contenido de la página</h1>
-            {/* Aquí irá el contenido principal de la página */}
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod velit vel velit bibendum, vel bibendum velit consectetur. Sed euismod, nulla sit amet aliquam lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nulla sit amet aliquam lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl.</p>
+            <h1>{seccion}</h1>
+            {renderContenido()}
         </Container>
     );
 };

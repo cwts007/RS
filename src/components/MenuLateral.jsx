@@ -1,12 +1,27 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
 
-const MenuLateral = () => {
+const MenuLateral = ({ seccion, onSubseccionClick }) => {
     return (
         <Nav className="flex-column">
-            <Nav.Link href="/agregar">Agregar</Nav.Link>
-            <Nav.Link href="/modificar">Modificar</Nav.Link>
-            <Nav.Link href="/eliminar">Eliminar</Nav.Link>
+            {seccion === 'Equipos' && (
+                <>
+                    <Nav.Link onClick={() => onSubseccionClick('Registro')}>Registro</Nav.Link>
+                    <Nav.Link onClick={() => onSubseccionClick('Listado')}>Listado</Nav.Link>
+                </>
+            )}
+            {seccion === 'Clientes' && (
+                <>
+                    <Nav.Link onClick={() => onSubseccionClick('Registro')}>Registro</Nav.Link>
+                    <Nav.Link onClick={() => onSubseccionClick('Listado')}>Listado</Nav.Link>
+                </>
+            )}
+            {seccion === 'Servicios' && (
+                <>
+                    <Nav.Link onClick={() => onSubseccionClick('Registro')}>Registro</Nav.Link>
+                    <Nav.Link onClick={() => onSubseccionClick('Listado')}>Listado</Nav.Link>
+                </>
+            )}
         </Nav>
     );
 };

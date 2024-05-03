@@ -1,11 +1,11 @@
 import React from 'react';
 import { Navbar, Container } from 'react-bootstrap';
-import logo from '../assets/images/logo.png'; // Importa la imagen desde la carpeta de assets
+import logo from '../assets/images/Logo.png';
 
 const Header = ({ usuario }) => {
     return (
-        <Navbar bg="light" expand="lg" fixed="top">
-            <Container>
+        <Navbar bg="light" expand="lg">
+            <Container fluid>
                 <Navbar.Brand href="#home">
                     <img
                         src={logo}
