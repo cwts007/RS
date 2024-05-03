@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import Header from './components/Header';
+import MenuSuperior from './components/MenuSuperior';
+import MenuLateral from './components/MenuLateral';
+import Contenido from './components/Contenido';
+import Footer from './components/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const usuario = 'John Doe';
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <Header usuario={usuario} />
+      <MenuSuperior />
+      <Container fluid className="mt-5">
+        <Row>
+          <Col md={3} className="bg-light pt-3">
+            <MenuLateral />
+          </Col>
+          <Col md={9}>
+            <Contenido />
+          </Col>
+        </Row>
+      </Container>
+      <Footer />
+    </div>
+  );
+};
 
-export default App
+export default App;
