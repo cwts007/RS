@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
+import { connectToDatabase } from '../database';
 
 const ListadoServicios = () => {
-    // Aquí puedes obtener los datos de los servicios desde tu fuente de datos (API, base de datos, etc.)
-    const servicios = [
-        {
-            id: 1,
-            servicio: 'Servicio 1',
-            descripcion: 'Descripción del servicio 1',
-            precio: 100,
-        },
-        {
-            id: 2,
-            servicio: 'Servicio 2',
-            descripcion: 'Descripción del servicio 2',
-            precio: 200,
-        },
-        // Agrega más servicios según tus necesidades
-    ];
+    const [servicios, setServicios] = useState([]);
+
+    useEffect(() => {
+        const obtenerServicios = async () => {
+            try {
+                const db = await connectToDatabase();
+                const collection = db.collection('servicios');
+                const serviciosDB = await collection.find({}).toArray();
+                setServicios(serviciosDB);
+            } catch (error) {
+                console.error('Error al obtener los servicios desde la base de datos:', error);
+            }
+        };
+
+        obtenerServicios();
+    }, []);
 
     return (
         <Table striped bordered hover>
@@ -31,8 +32,8 @@ const ListadoServicios = () => {
             </thead>
             <tbody>
                 {servicios.map((servicio) => (
-                    <tr key={servicio.id}>
-                        <td>{servicio.id}</td>
+                    <tr key={servicio._id}>
+                        <td>{servicio._id}</td>
                         <td>{servicio.servicio}</td>
                         <td>{servicio.descripcion}</td>
                         <td>{servicio.precio}</td>

@@ -1,29 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
+import { connectToDatabase } from '../database';
 
 const ListadoEquipos = () => {
-    // Aquí puedes obtener los datos de los equipos desde tu fuente de datos (API, base de datos, etc.)
-    const equipos = [
-        {
-            id: 1,
-            equipo: 'Equipo 1',
-            marca: 'Marca 1',
-            modelo: 'Modelo 1',
-            numeroSerie: 'NS-001',
-            cliente: 'Cliente 1',
-            ubicacion: 'Ubicación 1',
-        },
-        {
-            id: 2,
-            equipo: 'Equipo 2',
-            marca: 'Marca 2',
-            modelo: 'Modelo 2',
-            numeroSerie: 'NS-002',
-            cliente: 'Cliente 2',
-            ubicacion: 'Ubicación 2',
-        },
-        // Agrega más equipos según tus necesidades
-    ];
+    const [equipos, setEquipos] = useState([]);
+
+    useEffect(() => {
+        const obtenerEquipos = async () => {
+            try {
+                const db = await connectToDatabase();
+                const collection = db.collection('equipos');
+                const equiposDB = await collection.find({}).toArray();
+                setEquipos(equiposDB);
+            } catch (error) {
+                console.error('Error al obtener los equipos desde la base de datos:', error);
+            }
+        };
+
+        obtenerEquipos();
+    }, []);
 
     return (
         <Table striped bordered hover>
@@ -40,8 +35,8 @@ const ListadoEquipos = () => {
             </thead>
             <tbody>
                 {equipos.map((equipo) => (
-                    <tr key={equipo.id}>
-                        <td>{equipo.id}</td>
+                    <tr key={equipo._id}>
+                        <td>{equipo._id}</td>
                         <td>{equipo.equipo}</td>
                         <td>{equipo.marca}</td>
                         <td>{equipo.modelo}</td>

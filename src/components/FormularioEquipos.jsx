@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { connectToDatabase } from '../database';
 
 const FormularioEquipos = () => {
     const [equipo, setEquipo] = useState('');
@@ -9,24 +10,35 @@ const FormularioEquipos = () => {
     const [cliente, setCliente] = useState('');
     const [ubicacion, setUbicacion] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Lógica para enviar los datos del formulario
-        console.log('Datos del formulario de equipos:', {
-            equipo,
-            marca,
-            modelo,
-            numeroSerie,
-            cliente,
-            ubicacion,
-        });
-        // Limpiar los campos del formulario después de enviar los datos
-        setEquipo('');
-        setMarca('');
-        setModelo('');
-        setNumeroSerie('');
-        setCliente('');
-        setUbicacion('');
+
+        try {
+            const db = await connectToDatabase();
+            const collection = db.collection('equipos');
+
+            const nuevoEquipo = {
+                equipo,
+                marca,
+                modelo,
+                numeroSerie,
+                cliente,
+                ubicacion,
+            };
+
+            await collection.insertOne(nuevoEquipo);
+            console.log('Equipo guardado en la base de datos');
+
+            // Limpiar los campos del formulario después de enviar los datos
+            setEquipo('');
+            setMarca('');
+            setModelo('');
+            setNumeroSerie('');
+            setCliente('');
+            setUbicacion('');
+        } catch (error) {
+            console.error('Error al guardar el equipo en la base de datos:', error);
+        }
     };
 
     return (
@@ -41,7 +53,6 @@ const FormularioEquipos = () => {
                     required
                 />
             </Form.Group>
-
             <Form.Group controlId="marca">
                 <Form.Label>Marca</Form.Label>
                 <Form.Control
@@ -52,7 +63,6 @@ const FormularioEquipos = () => {
                     required
                 />
             </Form.Group>
-
             <Form.Group controlId="modelo">
                 <Form.Label>Modelo</Form.Label>
                 <Form.Control
@@ -63,7 +73,6 @@ const FormularioEquipos = () => {
                     required
                 />
             </Form.Group>
-
             <Form.Group controlId="numeroSerie">
                 <Form.Label>Número de Serie</Form.Label>
                 <Form.Control
@@ -74,7 +83,6 @@ const FormularioEquipos = () => {
                     required
                 />
             </Form.Group>
-
             <Form.Group controlId="cliente">
                 <Form.Label>Cliente</Form.Label>
                 <Form.Control
@@ -85,7 +93,6 @@ const FormularioEquipos = () => {
                     required
                 />
             </Form.Group>
-
             <Form.Group controlId="ubicacion">
                 <Form.Label>Ubicación</Form.Label>
                 <Form.Control
@@ -96,7 +103,6 @@ const FormularioEquipos = () => {
                     required
                 />
             </Form.Group>
-
             <Button variant="primary" type="submit" className="mt-3">
                 Registrar Equipo
             </Button>
@@ -104,4 +110,4 @@ const FormularioEquipos = () => {
     );
 };
 
-export default FormularioEquipos;
+export default Formulario

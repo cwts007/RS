@@ -14,7 +14,7 @@ const App = () => {
 
   const handleSeccionClick = (seccion) => {
     setSeccionActual(seccion);
-    setSubseccionActual('Registro'); // Establecer la subsección predeterminada al cambiar de sección
+    setSubseccionActual('Registro');
   };
 
   const handleSubseccionClick = (subseccion) => {

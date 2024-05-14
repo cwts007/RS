@@ -7,13 +7,7 @@ const Header = ({ usuario }) => {
         <Navbar bg="light" expand="lg">
             <Container fluid>
                 <Navbar.Brand href="#home">
-                    <img
-                        src={logo}
-                        width="30"
-                        height="30"
-                        className="d-inline-block align-top"
-                        alt="Logo"
-                    />{' '}
+                    <img src={logo} width="30" height="30" className="d-inline-block align-top" alt="Logo" />{' '}
                     Registro Servicio
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

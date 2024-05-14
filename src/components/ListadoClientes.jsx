@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
+import { connectToDatabase } from '../database';
 
 const ListadoClientes = () => {
-    // Aquí puedes obtener los datos de los clientes desde tu fuente de datos (API, base de datos, etc.)
-    const clientes = [
-        {
-            id: 1,
-            nombre: 'Cliente 1',
-            email: 'cliente1@example.com',
-            telefono: '123456789',
-            direccion: 'Dirección 1',
-        },
-        {
-            id: 2,
-            nombre: 'Cliente 2',
-            email: 'cliente2@example.com',
-            telefono: '987654321',
-            direccion: 'Dirección 2',
-        },
-        // Agrega más clientes según tus necesidades
-    ];
+    const [clientes, setClientes] = useState([]);
+
+    useEffect(() => {
+        const obtenerClientes = async () => {
+            try {
+                const db = await connectToDatabase();
+                const collection = db.collection('clientes');
+                const clientesDB = await collection.find({}).toArray();
+                setClientes(clientesDB);
+            } catch (error) {
+                console.error('Error al obtener los clientes desde la base de datos:', error);
+            }
+        };
+
+        obtenerClientes();
+    }, []);
 
     return (
         <Table striped bordered hover>
@@ -34,8 +33,8 @@ const ListadoClientes = () => {
             </thead>
             <tbody>
                 {clientes.map((cliente) => (
-                    <tr key={cliente.id}>
-                        <td>{cliente.id}</td>
+                    <tr key={cliente._id}>
+                        <td>{cliente._id}</td>
                         <td>{cliente.nombre}</td>
                         <td>{cliente.email}</td>
                         <td>{cliente.telefono}</td>
